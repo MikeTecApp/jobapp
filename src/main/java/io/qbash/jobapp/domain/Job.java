@@ -1,13 +1,21 @@
 package io.qbash.jobapp.domain;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Job {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String description;
     private String date;
+
+    @ManyToMany
+    @JoinTable(name = "person_job",joinColumns = @JoinColumn(name = "job_id")
+    ,inverseJoinColumns = @JoinColumn(name = "person_id"))
     private Set<Person> people = new HashSet<>();
 
     public Job() {
